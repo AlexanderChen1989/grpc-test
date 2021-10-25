@@ -1,0 +1,82 @@
+ghz --insecure \
+-n 2000000 \
+--cpus=2 \
+--concurrency=500 \
+--connections=10 \
+--proto ./proto/hello.proto \
+--call hello.Hello.SayHello \
+-d '{"name":"Joe"}' \
+0.0.0.0:5000
+
+
+=====================
+GOMAXPROCS=1 go run main.go
+Summary:
+  Count:	2000000
+  Total:	36.29 s
+  Slowest:	34.55 ms
+  Fastest:	0.10 ms
+  Average:	6.72 ms
+  Requests/sec:	55109.68
+
+
+======================
+cargo run --release --bin s_t
+Summary:
+  Count:	2000000
+  Total:	35.42 s
+  Slowest:	32.40 ms
+  Fastest:	0.27 ms
+  Average:	7.61 ms
+  Requests/sec:	56464.61
+
+
+==================
+GOMAXPROCS=2 go run main.go
+Summary:
+  Count:	2000000
+  Total:	36.01 s
+  Slowest:	43.51 ms
+  Fastest:	0.07 ms
+  Average:	6.28 ms
+  Requests/sec:	55540.53
+
+==================
+GOMAXPROCS=2 cargo run --release --bin m_t
+Summary:
+  Count:	2000000
+  Total:	35.04 s
+  Slowest:	35.34 ms
+  Fastest:	0.08 ms
+  Average:	6.24 ms
+  Requests/sec:	57084.20
+
+=================
+GOMAXPROCS=1 cargo run --release --bin m_t
+Summary:
+  Count:	2000000
+  Total:	40.28 s
+  Slowest:	192.24 ms
+  Fastest:	0.08 ms
+  Average:	8.82 ms
+  Requests/sec:	49652.04
+
+================
+GOMAXPROCS=1 cargo run --release --bin m_t2
+Summary:
+  Count:	2000000
+  Total:	33.79 s
+  Slowest:	29.40 ms
+  Fastest:	0.11 ms
+  Average:	6.92 ms
+  Requests/sec:	59194.44
+
+=======
+GOMAXPROCS=2 cargo run --release --bin m_t2
+Summary:
+  Count:	2000000
+  Total:	33.29 s
+  Slowest:	36.09 ms
+  Fastest:	0.08 ms
+  Average:	5.91 ms
+  Requests/sec:	60082.23

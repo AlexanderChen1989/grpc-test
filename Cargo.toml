@@ -1,0 +1,26 @@
+[package]
+edition = "2021"
+name = "grpc-test"
+version = "0.1.0"
+
+[dependencies]
+async-trait = "0.1"
+prost = "0.9"
+tokio = {version = "1.12", features = ["full"]}
+tokio-stream = {version = "0.1", features = ["net"]}
+tonic = {git = "https://github.com/hyperium/tonic"}
+hyper = "0.14"
+# listenfd = "0.3"
+# libc = "*"
+# nix = "*"
+
+# jemallocator = "0.3"
+mimalloc = {version = "0.1", default-features = false}
+affinity = "*"
+
+[build-dependencies]
+tonic-build = {git = "https://github.com/hyperium/tonic"}
+
+# [profile.release]
+# opt-level = 3               # Use slightly better optimizations.
+# overflow-checks = false     # Disable integer overflow checks.
